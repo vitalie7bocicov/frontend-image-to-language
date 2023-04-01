@@ -1,5 +1,8 @@
-import { Field, Form, Formik, ErrorMessage } from "formik";
-import React from "react";
+import { Field, Form, Formik, ErrorMessage} from "formik";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
+import "./MainPage.css";
 
 const ImageUploadField = ({ field, form, ...props }) => {
   const handleImageChange = (e) => {
@@ -21,46 +24,58 @@ const ImageUploadField = ({ field, form, ...props }) => {
   );
 };
 
+
 export default function MainPage() {
+  const navigate = useNavigate();
+  const [language, setLanguage] = useState("en");
+
+  const generatePage = () => {
+    Cookies.set('lang', language);
+    navigate("/generated-page");
+  };
+
   const onSubmit = (values) => {
     console.log(values);
   };
 
   return (
-    <div className="container">
-      <h1>Upload a photo!</h1>
-      <div>
-        <Formik
-          initialValues={{ image: null, language: "english" }}
-          onSubmit={onSubmit}
-          validateOnBlur={false}
-          validateOnChange={false}
-        >
-          {(props) => (
-            <Form>
-              <div className="d-flex flex-column justify-content-center align-items-center">
-                <fieldset className="form-group col-6">
-                  <Field name="image" component={ImageUploadField} />
-                </fieldset>
-                <fieldset className="form-group col-6 my-4">
-                  <div className="d-flex">
-                    <label htmlFor="language">Language:</label>
-                    <Field name="language" as="select" className="form-control">
-                      <option value="en">English</option>
-                      <option value="ro">Romanian</option>
-                      <option value="es">Spanish</option>
-                      <option value="ru">Russian</option>
-                    </Field>
-                  </div>
-                </fieldset>
-                {props.errors.image && <div>{props.errors.image}</div>}
-                <button className="btn btn-success" type="submit">
-                  Save
-                </button>
-              </div>
-            </Form>
-          )}
-        </Formik>
+    <div className="mainDiv">
+      <div className="centerDiv">
+        <h1>PhotoSpeak</h1>
+        <div>
+          <Formik
+            initialValues={{ image: null, language: "english" }}
+            onSubmit={onSubmit}
+            validateOnBlur={false}
+            validateOnChange={false}
+          >
+            {(props) => (
+              <Form>
+                <div className="d-flex flex-column justify-content-center align-items-center">
+                  <fieldset className="form-group col-6 my-4">
+                    <div className="d-flex">
+                      <label htmlFor="language">Language: </label>
+                      <Field name="language" as="select" className="form-control" onChange={(e) => {setLanguage(e.target.value); }}  value={language}>
+                        <option value="en">English</option>
+                        <option value="ro">Romanian</option>
+                        <option value="es">Spanish</option>
+                        <option value="ru">Russian</option>
+                      </Field>
+                    </div>
+                  </fieldset>
+                  <h4>Upload a picture!</h4>
+                  <fieldset className="form-group col-6">
+                    <Field name="image" component={ImageUploadField} />
+                  </fieldset>
+                  {props.errors.image && <div>{props.errors.image}</div>}
+                  <button className="findButton" type="button" onClick = {generatePage}>
+                    Find Words
+                  </button>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </div>
       </div>
     </div>
   );
