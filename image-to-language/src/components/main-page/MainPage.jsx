@@ -28,13 +28,9 @@ export default function MainPage() {
   const navigate = useNavigate();
   const [language, setLanguage] = useState("en");
 
-  const generatePage = () => {
-    Cookies.set("lang", language);
-    navigate("/generated-page");
-  };
-
   const onSubmit = (values) => {
-    console.log(values);
+    Cookies.set("lang", language);
+    navigate("/generated-page", { state: values });
   };
 
   return (
@@ -75,11 +71,7 @@ export default function MainPage() {
                     <Field name="image" component={ImageUploadField} />
                   </fieldset>
                   {props.errors.image && <div>{props.errors.image}</div>}
-                  <button
-                    className="findButton"
-                    type="button"
-                    onClick={generatePage}
-                  >
+                  <button className="findButton" type="submit">
                     Find Words
                   </button>
                 </div>

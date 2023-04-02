@@ -1,9 +1,10 @@
 .generated-container {
   width: 100%;
-  height: 700px;
+  height: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-top: 100px;
 }
 
 .divCols {
@@ -20,4 +21,34 @@
   font-size: 1.5rem;
   font-weight: 600;
   padding: 0.5rem 1rem;
+}
+
+.labels-container {
+  height: 450px;
+  overflow-y: scroll;
+}
+
+.searched-image {
+  width: 600px;
+  height: auto;
+}
+
+@media (max-width: 992px) {
+  .generated-container {
+    padding-top: 300px;
+    height: 300px;
+  }
+
+  .labels-container {
+    height: 200px;
+  }
+
+  .image-container {
+    padding-top: 40px;
+  }
+
+  .searched-image {
+    width: 300px;
+    height: auto;
+  }
 }
