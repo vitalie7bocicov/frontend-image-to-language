@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:8081",
+  baseURL: "https://backend-swzv55iwsq-uc.a.run.app",
 });
 
 export const findWords = (photo, lang) => {
