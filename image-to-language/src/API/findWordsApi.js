@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "https://backend-swzv55iwsq-uc.a.run.app",
+  baseURL: "https://photospeack-backend-swzv55iwsq-lm.a.run.app",
 });
 
 export const findWords = (photo, lang) => {
