@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Cookies from "js-cookie";
 import "./GeneratedPage.css";
 import { findWords, getSpeech } from "../../API/findWordsApi";
 import { useLocation } from "react-router-dom";
@@ -9,22 +8,22 @@ export default function GeneratedPage() {
   const [labels, setLabels] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
+  const language = new URLSearchParams(location.search).get("lang");
 
   useEffect(() => {
     if (location.state) {
       setPhoto(location.state.image);
-      console.log(photo);
-      findWords(location.state.image, Cookies.get("lang"))
+      findWords(location.state.image, language)
         .then((response) => {
           setLabels(response.data);
         })
         .catch((error) => console.error(error))
         .finally(() => setIsLoading(false));
     }
-  }, [location]);
+  }, [location, language]);
 
   const playAudio = (text) => {
-    getSpeech(text, Cookies.get("lang"))
+    getSpeech(text, language)
       .then((audioData) => {
         const audio = new Audio(URL.createObjectURL(audioData));
         audio.play();

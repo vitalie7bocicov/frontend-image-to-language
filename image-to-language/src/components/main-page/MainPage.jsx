@@ -1,7 +1,6 @@
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 import "./MainPage.css";
 
 const ImageUploadField = ({ field, form, ...props }) => {
@@ -29,8 +28,7 @@ export default function MainPage() {
   const [language, setLanguage] = useState("en");
 
   const onSubmit = (values) => {
-    Cookies.set("lang", language);
-    navigate("/generated-page", { state: values });
+    navigate(`/generated-page?lang=${language}`, { state: values });
   };
 
   return (

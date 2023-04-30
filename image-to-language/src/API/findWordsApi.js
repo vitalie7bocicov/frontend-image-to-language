@@ -1,14 +1,13 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "https://photospeack-backend-swzv55iwsq-lm.a.run.app",
+  baseURL: "http://localhost:8081",
 });
 
 export const findWords = (photo, lang) => {
   const formData = new FormData();
   formData.append("photo", photo);
   formData.append("language", lang);
-
   return apiClient.post("/what-is", formData);
 };
 
