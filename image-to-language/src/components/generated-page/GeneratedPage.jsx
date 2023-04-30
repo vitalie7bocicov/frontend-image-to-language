@@ -25,7 +25,8 @@ export default function GeneratedPage() {
   const playAudio = (text) => {
     getSpeech(text, language)
       .then((audioData) => {
-        const audio = new Audio(URL.createObjectURL(audioData));
+        const blob = new Blob([audioData], { type: "audio/mpeg" });
+        const audio = new Audio(URL.createObjectURL(blob));
         audio.play();
       })
       .catch((error) => console.error(error));
