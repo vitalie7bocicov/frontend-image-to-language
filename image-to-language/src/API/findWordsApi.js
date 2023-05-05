@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:8081",
+  baseURL: "http://localhost",
 });
 
 export const findWords = (photo, lang) => {
@@ -14,7 +14,7 @@ export const findWords = (photo, lang) => {
 export const getSpeech = (text, lang) => {
   const url = `/speech?text=${text}&lang=${lang}`;
   return apiClient
-    .get(url, { responseType: "blob" })
+    .get(url, { responseType: "arraybuffer" })
     .then((response) => {
       return response.data;
     })
