@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "http://localhost",
+  baseURL: "20.218.207.237",
 });
 
 export const findWords = (photo, lang) => {
