@@ -1,6 +1,8 @@
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { auth } from '../../lib/firebaseInit';
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import "./MainPage.css";
 
 const ImageUploadField = ({ field, form, ...props }) => {
@@ -31,6 +33,15 @@ export default function MainPage() {
     navigate(`/generated-page?lang=${language}`, { state: values });
   };
 
+  const onChange = async () => {
+    try {
+      const user = await createUserWithEmailAndPassword(auth, "edik@gmail.com", 'Iasi123')
+    }
+    catch(error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <div className="container mainDiv d-flex justify-content-center">
       <div className="centerDiv col-12 col-sm-10 col-md-8 col-lg-6 my-auto">
@@ -53,7 +64,8 @@ export default function MainPage() {
                         as="select"
                         className="form-control"
                         onChange={(e) => {
-                          setLanguage(e.target.value);
+                          onChange();
+                          //setLanguage(e.target.value);
                         }}
                         value={language}
                       >
