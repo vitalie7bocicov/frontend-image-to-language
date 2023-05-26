@@ -21,6 +21,8 @@ export default function SignInPage() {
 
         try {
             await singInUser(email, password);
+
+            navigate('/');
         }
         catch(err) {
             if (err.code === 'auth/user-not-found') {
@@ -84,9 +86,9 @@ export default function SignInPage() {
                         <div className="error-format">{errorMessage}</div>
                     ) : null}
                     
-                    <Link to="/">Create Account</Link>
+                    <Link to="/sign-up">Create Account</Link>
                     <button className="findButton" type="submit">
-                        Login   
+                        Login
                     </button>  
                 </div>
               </Form>

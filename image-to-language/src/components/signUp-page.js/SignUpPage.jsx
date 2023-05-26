@@ -2,7 +2,7 @@ import { Field, Form, Formik, ErrorMessage } from "formik";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SignUpPage.css";
-import { createUser } from "../../services/authSerive";
+import { createUser, sendEmail } from "../../services/authSerive";
 
 export default function SignUpPage() {
   const [errorMessage, setErrorMessage] = useState(""); 
@@ -56,12 +56,15 @@ export default function SignUpPage() {
     }
 
     try {
-        const user = await createUser(email, password);
+      const user = await createUser(email, password);
+      
+      sendEmail();
+      navigate('/confirm-email');
     }
     catch(err) {
         setErrorMessage("Email already in use");
     }
-    //navigate(`/generated-page?lang=${language}`, { state: values });
+    
   };
 
   return (

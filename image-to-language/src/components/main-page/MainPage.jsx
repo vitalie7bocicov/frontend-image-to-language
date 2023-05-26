@@ -33,7 +33,7 @@ export default function MainPage() {
     const user = getCurrentUser();
 
     if (user === null) {
-      navigate(`/sign-up`);
+      navigate(`/sign-in`);
     }
   };
 
