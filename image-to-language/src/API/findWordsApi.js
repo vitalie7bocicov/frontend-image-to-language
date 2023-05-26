@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "http://20.113.8.47",
+  baseURL: "http://localhost:8080",
 });
 
 export const findWords = (photo, lang) => {
@@ -19,4 +19,13 @@ export const getSpeech = (text, lang) => {
       return response.data;
     })
     .catch((error) => console.error(error));
+};
+
+export const checkPronunciation = (text, lang, speech) => {
+  const formData = new FormData();
+  formData.append("text", text);
+  formData.append("language", lang);
+  formData.append("speech", speech);
+  console.log(formData);
+  return apiClient.post("/speech", formData);
 };

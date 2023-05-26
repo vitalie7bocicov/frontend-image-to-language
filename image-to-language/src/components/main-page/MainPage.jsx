@@ -72,8 +72,16 @@ export default function MainPage() {
                       >
                         <option value="en">English</option>
                         <option value="ro">Romanian</option>
+                        <option value="zh">Chinese</option>
                         <option value="es">Spanish</option>
+                        <option value="hi">Hindi</option>
+                        <option value="ar">Arabic</option>
+                        <option value="pt">Portuguese</option>
+                        <option value="bn">Bengali</option>
                         <option value="ru">Russian</option>
+                        <option value="ja">Japanese</option>
+                        <option value="de">German</option>
+                        <option value="fr">French</option>
                       </Field>
                     </div>
                   </fieldset>
