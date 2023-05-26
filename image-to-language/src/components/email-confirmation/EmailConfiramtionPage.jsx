@@ -1,12 +1,16 @@
 import React from "react";
 import { sendEmail, signOut } from "../../services/authSerive";
+import { useNavigate } from "react-router-dom";
 
 export default function ConfirmEmailPage() {
+    const navigate = useNavigate();
+
     const buttonTrigger = async () => {
         await sendEmail();
     }
     const logOut = async () => {
         await signOut();
+        navigate('/sign-in');
     }
 
   return (
