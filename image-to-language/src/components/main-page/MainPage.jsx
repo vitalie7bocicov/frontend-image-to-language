@@ -1,9 +1,10 @@
 import { Field, Form, Formik, ErrorMessage } from "formik";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from '../../lib/firebaseInit';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import "./MainPage.css";
+import { getCurrentUser } from "../../services/authSerive";
 
 const ImageUploadField = ({ field, form, ...props }) => {
   const handleImageChange = (e) => {
@@ -26,20 +27,21 @@ const ImageUploadField = ({ field, form, ...props }) => {
 };
 
 export default function MainPage() {
+  useEffect(() => doRequest(), []);
+
+  const doRequest = () => {
+    const user = getCurrentUser();
+
+    if (user === null) {
+      navigate(`/sign-up`);
+    }
+  };
+
   const navigate = useNavigate();
   const [language, setLanguage] = useState("en");
 
   const onSubmit = (values) => {
     navigate(`/generated-page?lang=${language}`, { state: values });
-  };
-
-  const onChange = async () => {
-    try {
-      const user = await createUserWithEmailAndPassword(auth, "edik@gmail.com", 'Iasi123')
-    }
-    catch(error) {
-      console.log(error.message);
-    }
   };
 
   return (
@@ -64,8 +66,7 @@ export default function MainPage() {
                         as="select"
                         className="form-control"
                         onChange={(e) => {
-                          onChange();
-                          //setLanguage(e.target.value);
+                          setLanguage(e.target.value);
                         }}
                         value={language}
                       >
