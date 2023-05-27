@@ -21,9 +21,10 @@ export default function GeneratedPage() {
   const [rightLanguage, setRightLanguage] = useState(
     new URLSearchParams(location.search).get("lang")
   );
-  const [recordedAudio, setRecordedAudio] = useState(null);
+  const [pronunciationResults, setPronunciationResults] = useState({});
 
   useEffect(() => {
+    setPronunciationResults({});
     if (location.state) {
       setPhoto(location.state.image);
       findWords(location.state.image, leftLanguage)
@@ -71,7 +72,22 @@ export default function GeneratedPage() {
       .catch((error) => console.error(error));
   };
 
-  const recordAudio = (text, language) => {
+  const _checkPronuntiation = (text, language, speech, label) => {
+    checkPronunciation(text, language, speech)
+      .then((response) => {
+        let pronunciationOK = false;
+        if (response.data === "OK") pronunciationOK = true;
+        setPronunciationResults((prevResults) => ({
+          ...prevResults,
+          [label]: pronunciationOK,
+        }));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const recordAudio = (text, language, label) => {
     const audioChunks = [];
 
     navigator.mediaDevices
@@ -91,15 +107,14 @@ export default function GeneratedPage() {
           const reader = new FileReader();
           reader.onloadend = () => {
             const base64Data = reader.result.split(",")[1];
-            setRecordedAudio(base64Data);
+            _checkPronuntiation(text, language, base64Data, label);
           };
           reader.readAsDataURL(audioBlob);
         });
 
         setTimeout(() => {
           mediaRecorder.stop();
-          checkPronunciation(text, language, recordedAudio);
-        }, 4000);
+        }, 2000);
       })
       .catch((error) => {
         console.error("Error recording audio:", error);
@@ -237,14 +252,20 @@ export default function GeneratedPage() {
                 {rightLabels.map((label) => (
                   <div key={label} className="d-flex">
                     <button
-                      className="labelButton my-1"
+                      className={`labelButton my-1 ${
+                        pronunciationResults[label] === true
+                          ? "green"
+                          : pronunciationResults[label] === false
+                          ? "red"
+                          : ""
+                      }`}
                       onClick={() => playAudio(label, rightLanguage)}
                     >
                       {label}
                     </button>
                     <button
                       className="btn speechButton"
-                      onClick={() => recordAudio(label, rightLanguage)}
+                      onClick={() => recordAudio(label, rightLanguage, label)}
                     >
                       <BsMicFill className="mic-icon" />
                     </button>
