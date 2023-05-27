@@ -1,7 +1,7 @@
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from '../../lib/firebaseInit';
+import { auth } from "../../lib/firebaseInit";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import "./MainPage.css";
 import { getCurrentUser } from "../../services/authSerive";

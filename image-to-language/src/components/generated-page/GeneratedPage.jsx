@@ -4,7 +4,7 @@ import {
   checkPronunciation,
   findWords,
   getSpeech,
-} from "../../API/findWordsApi";
+} from "../../API/api-functions";
 import { useLocation } from "react-router-dom";
 import { Field, Form, Formik } from "formik";
 import { BsMicFill } from "react-icons/bs";

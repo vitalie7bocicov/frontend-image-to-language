@@ -5,33 +5,31 @@ import { createUser, singInUser } from "../../services/authSerive";
 import { Link } from "react-router-dom";
 
 export default function SignInPage() {
-  const [errorMessage, setErrorMessage] = useState(""); 
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const onSubmit = async (values) => {
-        if (email.length === 0) {
-            setErrorMessage("Please insert your email!");
-        }
+    if (email.length === 0) {
+      setErrorMessage("Please insert your email!");
+    }
 
-        if (password.length === 0) {
-            setErrorMessage("Please insert your password!");
-        }
+    if (password.length === 0) {
+      setErrorMessage("Please insert your password!");
+    }
 
-        try {
-            await singInUser(email, password);
+    try {
+      await singInUser(email, password);
 
-            navigate('/');
-        }
-        catch(err) {
-            if (err.code === 'auth/user-not-found') {
-                setErrorMessage("User not found");
-            }
-            else if (err.code === 'auth/wrong-password') {
-                setErrorMessage("Wrong credentials");
-            }  
-        }
+      navigate("/");
+    } catch (err) {
+      if (err.code === "auth/user-not-found") {
+        setErrorMessage("User not found");
+      } else if (err.code === "auth/wrong-password") {
+        setErrorMessage("Wrong credentials");
+      }
+    }
   };
 
   return (
@@ -52,17 +50,15 @@ export default function SignInPage() {
                     <h4>Email</h4>
                     <div className="d-flex align-items-center">
                       <Field
-                        type = "email"
+                        type="email"
                         name="email"
                         className="form-control"
                         onChange={(e) => {
-                            setEmail(e.target.value);
+                          setEmail(e.target.value);
                         }}
                         value={email}
                         placeholder="Email"
-                      >
-                      </Field>
-                      
+                      ></Field>
                     </div>
                   </fieldset>
                   <fieldset className="form-group col-6 my-2">
@@ -73,23 +69,22 @@ export default function SignInPage() {
                         type="password"
                         className="form-control"
                         onChange={(e) => {
-                            setPassword(e.target.value);
+                          setPassword(e.target.value);
                         }}
                         value={password}
                         placeholder="Password"
-                      >
-                      </Field>
+                      ></Field>
                     </div>
                   </fieldset>
 
-                  { errorMessage !== '' ? (
-                        <div className="error-format">{errorMessage}</div>
-                    ) : null}
-                    
-                    <Link to="/sign-up">Create Account</Link>
-                    <button className="findButton" type="submit">
-                        Login
-                    </button>  
+                  {errorMessage !== "" ? (
+                    <div className="error-format">{errorMessage}</div>
+                  ) : null}
+
+                  <Link to="/sign-up">Create Account</Link>
+                  <button className="findButton" type="submit">
+                    Login
+                  </button>
                 </div>
               </Form>
             )}

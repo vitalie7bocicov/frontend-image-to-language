@@ -5,7 +5,7 @@ import "./SignUpPage.css";
 import { createUser, sendEmail } from "../../services/authSerive";
 
 export default function SignUpPage() {
-  const [errorMessage, setErrorMessage] = useState(""); 
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,22 +16,21 @@ export default function SignUpPage() {
   }
 
   function passwordVerification(password) {
-    if(password.length < 6) {
-        return false;
+    if (password.length < 6) {
+      return false;
     }
 
     let ok = false;
-    for(let i = 0; i < password.length; i++) {
-        if(password[i] >= '0' && password <= '9') {
-            ok = true;
-        }
+    for (let i = 0; i < password.length; i++) {
+      if (password[i] >= "0" && password <= "9") {
+        ok = true;
+      }
     }
 
-    if(!ok) {
-        return true;
-    }
-    else {
-        return false;
+    if (!ok) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -41,30 +40,28 @@ export default function SignUpPage() {
 
   const onSubmit = async (values) => {
     if (!isValidEmail(email)) {
-        setErrorMessage("Invalid email format");
-        return;
+      setErrorMessage("Invalid email format");
+      return;
     }
 
-    if(!passwordVerification(password)) {
-        setErrorMessage("Invalid password format");
-        return;
+    if (!passwordVerification(password)) {
+      setErrorMessage("Invalid password format");
+      return;
     }
 
-    if(!passwordMatching(password, confirmPassword)) {
-        setErrorMessage("Passwords do not match");
-        return;
+    if (!passwordMatching(password, confirmPassword)) {
+      setErrorMessage("Passwords do not match");
+      return;
     }
 
     try {
       const user = await createUser(email, password);
-      
+
       sendEmail();
-      navigate('/confirm-email');
+      navigate("/confirm-email");
+    } catch (err) {
+      setErrorMessage("Email already in use");
     }
-    catch(err) {
-        setErrorMessage("Email already in use");
-    }
-    
   };
 
   return (
@@ -85,17 +82,15 @@ export default function SignUpPage() {
                     <h4>Email</h4>
                     <div className="d-flex align-items-center">
                       <Field
-                        type = "email"
+                        type="email"
                         name="email"
                         className="form-control"
                         onChange={(e) => {
-                            setEmail(e.target.value);
+                          setEmail(e.target.value);
                         }}
                         value={email}
                         placeholder="Email"
-                      >
-                      </Field>
-                      
+                      ></Field>
                     </div>
                   </fieldset>
                   <fieldset className="form-group col-6 my-2">
@@ -106,12 +101,11 @@ export default function SignUpPage() {
                         type="password"
                         className="form-control"
                         onChange={(e) => {
-                            setPassword(e.target.value);
+                          setPassword(e.target.value);
                         }}
                         value={password}
                         placeholder="Password"
-                      >
-                      </Field>
+                      ></Field>
                     </div>
                   </fieldset>
 
@@ -123,19 +117,18 @@ export default function SignUpPage() {
                         type="password"
                         className="form-control"
                         onChange={(e) => {
-                            setConfirmPassword(e.target.value);
+                          setConfirmPassword(e.target.value);
                         }}
                         value={confirmPassword}
                         placeholder="Confirm Password"
-                      >
-                      </Field>
+                      ></Field>
                     </div>
                   </fieldset>
-                  { errorMessage !== '' ? (
-                        <div className="error-format">{errorMessage}</div>
-                    ) : null}
+                  {errorMessage !== "" ? (
+                    <div className="error-format">{errorMessage}</div>
+                  ) : null}
                   <button className="findButton" type="submit">
-                    Register    
+                    Register
                   </button>
                 </div>
               </Form>
