@@ -1,7 +1,10 @@
 import { Field, Form, Formik, ErrorMessage } from "formik";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { auth } from '../../lib/firebaseInit';
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import "./MainPage.css";
+import { getCurrentUser } from "../../services/authSerive";
 
 const ImageUploadField = ({ field, form, ...props }) => {
   const handleImageChange = (e) => {
@@ -24,6 +27,16 @@ const ImageUploadField = ({ field, form, ...props }) => {
 };
 
 export default function MainPage() {
+  useEffect(() => doRequest(), []);
+
+  const doRequest = () => {
+    const user = getCurrentUser();
+
+    if (user === null) {
+      navigate(`/sign-in`);
+    }
+  };
+
   const navigate = useNavigate();
   const [language, setLanguage] = useState("en");
 

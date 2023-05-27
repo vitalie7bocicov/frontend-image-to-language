@@ -1,13 +1,18 @@
 import axios from "axios";
+import { getCurrentUser } from "../services/authSerive";
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "http://localhost:8081",
 });
 
 export const findWords = (photo, lang) => {
   const formData = new FormData();
+
+  const user = getCurrentUser();
+
   formData.append("photo", photo);
   formData.append("language", lang);
+  formData.append("username", user.email);
   return apiClient.post("/what-is", formData);
 };
 
