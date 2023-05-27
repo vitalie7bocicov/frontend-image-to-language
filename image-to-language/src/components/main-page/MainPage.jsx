@@ -5,6 +5,7 @@ import { auth } from "../../lib/firebaseInit";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import "./MainPage.css";
 import { getCurrentUser } from "../../services/authSerive";
+import Navbar from "../navbar/navbar";
 
 const ImageUploadField = ({ field, form, ...props }) => {
   const handleImageChange = (e) => {
@@ -45,7 +46,9 @@ export default function MainPage() {
   };
 
   return (
-    <div className="container mainDiv d-flex justify-content-center">
+    <>
+    <Navbar />
+    <div className="container mainDiv2 d-flex justify-content-center">
       <div className="centerDiv col-12 col-sm-10 col-md-8 col-lg-6 my-auto">
         <h1>PhotoSpeak</h1>
         <div>
@@ -100,5 +103,6 @@ export default function MainPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

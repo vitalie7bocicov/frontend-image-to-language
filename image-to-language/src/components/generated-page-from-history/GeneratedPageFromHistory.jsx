@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import "./GeneratedPage.css";
+import "./GeneratedPageFromHistory.css";
 import {
   checkPronunciation,
-  findWords,
+  getTranslation,
   getSpeech,
 } from "../../API/api-functions";
 import { useLocation } from "react-router-dom";
@@ -27,18 +27,16 @@ export default function GeneratedPage() {
   useEffect(() => {
     setPronunciationResults({});
     if (location.state) {
-      setPhoto(location.state.image);
-      findWords(location.state.image, leftLanguage)
-        .then((response) => {
-          setLeftLabels(response.data);
-        })
-        .catch((error) => console.error(error));
-      findWords(location.state.image, rightLanguage)
-        .then((response) => {
-          setRightLabels(response.data);
-        })
-        .catch((error) => console.error(error))
-        .finally(() => setIsLoading(false));
+      setPhoto(location.state.link);
+      console.log(location.state.labels);
+      getTranslation(location.state.labels, leftLanguage).then((res) => {
+        setLeftLabels(res.data);
+        setIsLoading(false);
+      });
+      getTranslation(location.state.labels, rightLanguage).then((res) => {
+        setRightLabels(res.data);
+        setIsLoading(false);
+      });
     }
   }, [location, leftLanguage, rightLanguage]);
 
@@ -130,7 +128,7 @@ export default function GeneratedPage() {
         <div className="d-flex flex-column align-items-center justify-content-center image-container">
           {photo ? (
             <img
-              src={URL.createObjectURL(photo)}
+              src={photo}
               alt="uploaded"
               className="searched-image"
             />

@@ -5,6 +5,14 @@ const apiClient = axios.create({
   baseURL: "http://localhost:8080",
 });
 
+export const getTranslation = (text, lang) => {
+  const url = '/translate';
+  return apiClient.post(url, {
+    text: text,
+    language: lang,
+  });
+};
+
 export const findWords = (photo, lang) => {
   const formData = new FormData();
 
@@ -33,3 +41,16 @@ export const checkPronunciation = (text, lang, speech) => {
   formData.append("speech", speech);
   return apiClient.post("/speech", formData);
 };
+
+export const getHistory = () => {
+  const user = getCurrentUser();
+  const url = `/getUserPhoto`;
+ 
+  return apiClient(url, 
+    {
+      params: {
+        username: user.email,
+      },
+    }
+  );
+}
