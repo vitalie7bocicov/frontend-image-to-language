@@ -14,7 +14,12 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<MainPage />} />
+          <Route
+            path="/"
+            element={
+              getCurrentUser() ? <MainPage /> : <Navigate to="/sign-in" />
+            }
+          />
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/confirm-email" element={<ConfirmEmailPage />} />
           <Route path="/sign-in" element={<SignInPage />} />
