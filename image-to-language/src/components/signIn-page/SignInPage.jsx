@@ -1,7 +1,7 @@
 import { Field, Form, Formik, ErrorMessage } from "formik";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { singInUser } from "../../services/authSerive";
+import { getCurrentUser, singInUser } from "../../services/authSerive";
 import { Link } from "react-router-dom";
 
 export default function SignInPage() {
@@ -9,6 +9,12 @@ export default function SignInPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    if (getCurrentUser() !== null) {
+      navigate('/home');
+    }
+  })
 
   const onSubmit = async (values) => {
     if (email.length === 0) {
