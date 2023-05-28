@@ -10,7 +10,7 @@ export default function ConfirmEmailPage() {
   };
   const logOut = async () => {
     await signOut();
-    navigate("/sign-in");
+    navigate("/");
   };
 
   return (
