@@ -1,7 +1,7 @@
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createUser, singInUser } from "../../services/authSerive";
+import { singInUser } from "../../services/authSerive";
 import { Link } from "react-router-dom";
 
 export default function SignInPage() {
@@ -22,7 +22,7 @@ export default function SignInPage() {
     try {
       await singInUser(email, password);
 
-      navigate("/");
+      navigate("/home");
     } catch (err) {
       if (err.code === "auth/user-not-found") {
         setErrorMessage("User not found");

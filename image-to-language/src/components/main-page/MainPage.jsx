@@ -34,7 +34,7 @@ export default function MainPage() {
     const user = getCurrentUser();
 
     if (user === null) {
-      navigate(`/sign-in`);
+      navigate(`/`);
     }
   };
 
