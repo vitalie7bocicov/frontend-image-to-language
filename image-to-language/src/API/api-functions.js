@@ -2,11 +2,11 @@ import axios from "axios";
 import { getCurrentUser } from "../services/authSerive";
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "https://photospeak-be-nujzl345ka-lm.a.run.app",
 });
 
 export const getTranslation = (text, lang) => {
-  const url = '/translate';
+  const url = "/translate";
   return apiClient.post(url, {
     text: text,
     language: lang,
@@ -45,12 +45,10 @@ export const checkPronunciation = (text, lang, speech) => {
 export const getHistory = () => {
   const user = getCurrentUser();
   const url = `/getUserPhoto`;
- 
-  return apiClient(url, 
-    {
-      params: {
-        username: user.email,
-      },
-    }
-  );
-}
+
+  return apiClient(url, {
+    params: {
+      username: user.email,
+    },
+  });
+};
